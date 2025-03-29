@@ -1,64 +1,98 @@
-Procedural Terrain Generation Project
+# Procedural Terrain Generation Project
 
-# CONTENTS
-  
-  1. Data
-  2. Segment
-  3. Analyze
-  4. Generate
-  5. Segmentation
+## 📌 Overview
+This project generates procedural terrain using input Digital Elevation Model (DEM) files. It segments and analyzes terrain data before generating new terrain using noise functions. The final result is a smoothly merged DEM file that can be evaluated using similarity metrics.
 
-1. Data
+## 📂 Contents
 
-  This folder is supposed to contain the input DEM files. We provide two example 
-  DEM files, namely `bryce_canyon_input.asc` and `kings_canyon_input.asc`. 
-  Some sources to obtain such files include the United States Geological Survey
-  (USGS) and ELVIS (Elevation Information System).
+1. [Data](#data)  
+2. [Segment](#segment)  
+3. [Analyze](#analyze)  
+4. [Generate](#generate)  
+5. [Finalize](#finalize)  
+6. [Evaluate](#evaluate)  
+7. [How to Run](#how-to-run)
 
-2. Segment
+---
 
-  This folder contains the source code for the segmentation algorithm 
-  implementation. It uses Python's `skimage` package to do the segmentation. 
-  After it identifies the segments, each segment is resized in order to be able 
-  to generate infinite terrain. Then, the segments will be exported into data 
-  in multiple csv files.
+### 1️⃣ Data
+📁 **Folder:** `Data/`  
+This folder stores the input DEM files. Two example files are provided:  
+- `bryce_canyon_input.asc`  
+- `kings_canyon_input.asc`  
 
-3. Analyze
+Sources for obtaining DEM files:  
+- [United States Geological Survey (USGS)](https://www.usgs.gov/)  
+- [ELVIS - Elevation Information System](https://elevation.fsdf.org.au/)  
 
-  This folder contains the source code that analyzes each segment's csv file. 
-  It will generate a height distribution function for each segment that will be 
-  used in the next stage.
+---
 
-4. Generate
+### 2️⃣ Segment
+📁 **Folder:** `Segment/`  
+Contains the segmentation algorithm implementation using Python’s `skimage` package.  
+- Identifies terrain segments  
+- Resizes them for infinite terrain generation  
+- Exports segments into multiple CSV files  
 
-  This folder contains the source code for the noise functions used in the
-  algorithm. `valuenoise.cpp` contains the fractal brownian implementation and 
-  the value noise algorithm, and `simplexnoise.cpp` is called upon in 
-  `valuenoise.cpp`. Overall, the noise algorithms are called in `main.cpp`, 
-  which produces a DEM file for each segment.
+---
 
-5. Finalize
+### 3️⃣ Analyze
+📁 **Folder:** `Analyze/`  
+Analyzes the CSV files of each segment and generates a height distribution function for terrain generation.
 
-  This folder contains source code to merge all DEM files together. It employs
-  a Gaussian blur smoothing function to ensure that segments merge together
-  naturally. The smoothing function can be deactivated if one wishes to do so.
+---
 
-6. Evaluate
-  This folder contains the various implementations of similarity metrics we
-  use. A Jupyter file can be used to evaluate all the similarity metrics at
-  once. To do so, modify the two terrain file names in the second cell, and run
-  the program.
+### 4️⃣ Generate
+📁 **Folder:** `Generate/`  
+Houses the noise function implementations for terrain generation:  
+- `valuenoise.cpp` → Fractal Brownian Motion & Value Noise  
+- `simplexnoise.cpp` → Simplex noise algorithm  
+- `main.cpp` → Calls the noise algorithms and produces DEM files  
 
-# HOW TO RUN
+---
 
-This program is only compatible for Windows.
+### 5️⃣ Finalize
+📁 **Folder:** `Finalize/`  
+Merges all generated DEM files into a final terrain. A Gaussian blur smoothing function is used to ensure seamless merging, but it can be deactivated if needed.
 
-## Install dependencies
-1. Install C++
-2. Install Conda
-3. Prepare Conda environmnt using `setup_conda_env.ps1`
+---
 
-## Run the program
+### 6️⃣ Evaluate
+📁 **Folder:** `Evaluate/`  
+Contains similarity metric implementations for evaluating the generated terrain.  
+- A Jupyter Notebook can be used to compare two terrain files.  
+- Modify the terrain file names in the second cell and run the notebook.  
+
+---
+
+## 🚀 How to Run
+
+> **This program is only compatible with Windows.**
+
+### ✅ Install Dependencies
+1. Install **C++**
+2. Install **Conda**
+3. Set up the Conda environment:  
+   ```sh
+   ./setup_conda_env.ps1
+   ```
+
+### ▶️ Run the Program
 1. Adjust parameters in `runner.ps1`
-2. Run `./runner.ps1`
-3. Evaluate the similarity of two DEM files using `similarity.py` 
+2. Execute:  
+   ```sh
+   ./runner.ps1
+   ```
+3. Evaluate terrain similarity using:  
+   ```sh
+   python similarity.py
+   ```
+
+---
+
+### 📢 Notes
+- Ensure all required dependencies are installed before running the program.
+- The Gaussian blur function in `Finalize/` is optional and can be disabled.
+- DEM files from external sources should match the expected format.
+
+---
